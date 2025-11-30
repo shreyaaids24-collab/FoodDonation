@@ -21,6 +21,11 @@ const Sidebar = ({ user, isSiderOpen, setIsSiderOpen }) => {
       path: "/dashboard/food",
     },
     {
+      text: "History",
+      logo: <FaListAlt />,
+      path: "/dashboard/history",
+    },
+    {
       text: "Profile",
       logo: <FaUser />,
       path: "/dashboard/profile",

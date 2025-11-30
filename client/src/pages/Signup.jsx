@@ -28,7 +28,7 @@ const Signup = () => {
       number: formData.number,
     };
     try {
-      const response = await axios.post("http://localhost:3000/signup", data);
+      const response = await axios.post("http://localhost:3050/signup", data);
       console.log(response);
       const { newUser, token } = response.data;
       localStorage.setItem("user", JSON.stringify(newUser));

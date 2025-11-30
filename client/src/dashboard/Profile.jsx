@@ -39,7 +39,7 @@ const Profile = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.put(
-        "http://localhost:3000/update",
+        "http://localhost:3050/update",
         {
           id: user._id,
           name,

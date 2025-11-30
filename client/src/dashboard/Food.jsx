@@ -17,7 +17,11 @@ const Food = () => {
   const fetchFoodItems = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3000/allfoods", {
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+      const response = await axios.get("http://localhost:3050/allfoods", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

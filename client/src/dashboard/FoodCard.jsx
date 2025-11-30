@@ -40,7 +40,19 @@ const FoodCard = ({ name, quantity, quantityUnit, date, madeDate, expiryHours, a
                 <span className="icons-name">
                   <FaCalendarAlt />
                 </span>
-                : Expiry date: {date}
+                :
+                {(() => {
+                  if (!date) return "";
+                  try {
+                    const base = new Date(date);
+                    if (Number(expiryHours)) {
+                      base.setHours(base.getHours() + Number(expiryHours));
+                    }
+                    return ` Final expiry: ${base.toLocaleString()}`;
+                  } catch (e) {
+                    return ` Expiry date: ${date}`;
+                  }
+                })()}
               </li>
               {madeDate && (
                 <li>

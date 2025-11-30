@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./FoodDonation.css";
 
@@ -16,6 +16,26 @@ function FoodDonation() {
 
   const email = localStorage.getItem("email");
   console.log(email);
+
+  useEffect(() => {
+    if (!expiryDate || !madeDate) {
+      setExpiryHours("");
+      return;
+    }
+    try {
+      const start = new Date(madeDate);
+      const end = new Date(expiryDate);
+      if (isNaN(start.getTime()) || isNaN(end.getTime()) || end <= start) {
+        setExpiryHours("");
+        return;
+      }
+      const diffMs = end.getTime() - start.getTime();
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      setExpiryHours(String(diffHours));
+    } catch (e) {
+      setExpiryHours("");
+    }
+  }, [expiryDate, madeDate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,7 +55,7 @@ function FoodDonation() {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/fooddonation",
+        "http://localhost:3050/fooddonation",
         {
           formData,
         },
@@ -132,11 +152,21 @@ function FoodDonation() {
           <div className="form_element">
             <label htmlFor="expiryDate">Expiry Date</label>
             <input
-              type="date"
+              type="datetime-local"
               id="expiryDate"
               name="expiryDate"
               value={expiryDate}
               onChange={(event) => setExpiryDate(event.target.value)}
+            />
+          </div>
+          <div className="form_element">
+            <label htmlFor="madeDate">Date when it is made</label>
+            <input
+              type="datetime-local"
+              id="madeDate"
+              name="madeDate"
+              value={madeDate}
+              onChange={(event) => setMadeDate(event.target.value)}
             />
           </div>
           <div className="form_element">
@@ -146,19 +176,10 @@ function FoodDonation() {
               id="expiryHours"
               name="expiryHours"
               value={expiryHours}
-              onChange={(event) => setExpiryHours(event.target.value)}
+              readOnly
             />
           </div>
-          <div className="form_element">
-            <label htmlFor="madeDate">Date when it is made</label>
-            <input
-              type="date"
-              id="madeDate"
-              name="madeDate"
-              value={madeDate}
-              onChange={(event) => setMadeDate(event.target.value)}
-            />
-          </div>
+          
           <div className="form_element">
             <label htmlFor="address">Address</label>
             <input

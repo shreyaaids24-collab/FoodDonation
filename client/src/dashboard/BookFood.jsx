@@ -16,7 +16,7 @@ const BookFood = () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.patch(
-        `http://localhost:3000/food/${foodId}/book`,
+        `http://localhost:3050/food/${foodId}/book`,
         { address },
         {
           headers: {

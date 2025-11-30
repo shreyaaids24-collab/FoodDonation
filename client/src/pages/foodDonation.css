@@ -32,15 +32,14 @@
 
 .food-donation_form {
     display: flex;
-
-    flex-direction: column;
-
-    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .form_element {
     display: flex;
-    width: auto;
+    width: 48%;
     height: 6rem;
     flex-direction: column;
 

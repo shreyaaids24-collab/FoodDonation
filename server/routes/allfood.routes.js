@@ -14,6 +14,25 @@ router.get("/allfoods", verifyToken, async (req, res) => {
     }
 });
 
+// History: only booked or picked items within the last 3 months
+router.get("/historyfoods", verifyToken, async (req, res) => {
+    try {
+        const now = new Date();
+        const threeMonthsAgo = new Date();
+        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+
+        const history = await Food.find({
+            status: { $in: ["ordered", "picked"] },
+            createdAt: { $gte: threeMonthsAgo, $lte: now },
+        });
+
+        res.status(200).json(history);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
 // Book a specific food item (receiver books the food)
 router.patch("/food/:id/book", verifyToken, async (req, res) => {
     try {
