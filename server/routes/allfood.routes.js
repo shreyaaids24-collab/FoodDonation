@@ -14,16 +14,11 @@ router.get("/allfoods", verifyToken, async (req, res) => {
     }
 });
 
-// History: only booked or picked items within the last 3 months
+// History: all booked or picked items
 router.get("/historyfoods", verifyToken, async (req, res) => {
     try {
-        const now = new Date();
-        const threeMonthsAgo = new Date();
-        threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
-
         const history = await Food.find({
             status: { $in: ["ordered", "picked"] },
-            createdAt: { $gte: threeMonthsAgo, $lte: now },
         });
 
         res.status(200).json(history);
