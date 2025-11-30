@@ -1,0 +1,136 @@
+/* ====== Base Layout ====== */
+.signup_container {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.signup_main-img {
+  flex: 1;
+  background-image: url(../assets/images/signup.jpg);
+  background-size: cover;
+  background-position: center;
+}
+
+.signup_wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  box-sizing: border-box;
+  padding: 40px;
+}
+
+.signup_wrapper form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+  max-height: 100%;
+}
+
+.login {
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ====== Buttons ====== */
+#signup-btn {
+  margin: 20px 0;
+  height: 60px;
+  border-radius: 12px;
+  border: none;
+  background-color: #225b5c;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+#signup-btn:hover {
+  transform: scale(1.05);
+  background-color: #1d4e4f;
+}
+
+/* ====== Inputs ====== */
+#email,
+#password,
+#name,
+#phone {
+  height: 55px;
+  padding-left: 15px;
+  border: none;
+  border-bottom: 3px solid #225b5c;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+#email:focus,
+#password:focus,
+#name:focus,
+#phone:focus {
+  border-color: #a5d0a8;
+  outline: none;
+}
+
+/* ====== Responsive Design ====== */
+
+/* Tablets and smaller screens */
+@media (max-width: 1024px) {
+  .signup_container {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .signup_main-img {
+    width: 100%;
+    height: 40vh;
+  }
+
+  .signup_wrapper {
+    width: 100%;
+    height: auto;
+    padding: 30px 20px;
+  }
+
+  .signup_wrapper form {
+    height: auto;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  body {
+    font-size: 1rem;
+  }
+
+  .signup_main-img {
+    height: 30vh;
+  }
+
+  .signup_wrapper {
+    padding: 20px;
+  }
+
+  #email,
+  #password,
+  #name,
+  #phone {
+    height: 50px;
+    font-size: 0.9rem;
+  }
+
+  #signup-btn {
+    height: 50px;
+    font-size: 0.9rem;
+  }
+
+  .login {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
