@@ -8,6 +8,11 @@ function FoodDonation() {
   const [quantity, setQuantity] = useState("");
   const [expiryDate, setExpiryDate] = useState("");
   const [address, setAddress] = useState("");
+  const [expiryHours, setExpiryHours] = useState("");
+  const [madeDate, setMadeDate] = useState("");
+  const [quantityUnit, setQuantityUnit] = useState("kg");
+  const [statusMessage, setStatusMessage] = useState("");
+  const [statusError, setStatusError] = useState(false);
 
   const email = localStorage.getItem("email");
   console.log(email);
@@ -19,6 +24,9 @@ function FoodDonation() {
       foodTag,
       quantity,
       expiryDate,
+      expiryHours,
+      madeDate,
+      quantityUnit,
       address,
       email,
     };
@@ -39,9 +47,22 @@ function FoodDonation() {
       );
 
       console.log(response.data);
+      setStatusError(false);
+      setStatusMessage("Food donation submitted successfully.");
+      // Optionally clear form
+      setFoodName("");
+      setFoodTag("");
+      setQuantity("");
+      setQuantityUnit("kg");
+      setExpiryDate("");
+      setExpiryHours("");
+      setMadeDate("");
+      setAddress("");
       return response.data;
     } catch (error) {
       console.error(error);
+      setStatusError(true);
+      setStatusMessage("Failed to submit food donation. Please try again.");
     }
   };
 
@@ -76,6 +97,19 @@ function FoodDonation() {
           </div>
 
           <div className="form_element">
+            <label htmlFor="quantityUnit">Quantity Unit</label>
+            <select
+              id="quantityUnit"
+              name="quantityUnit"
+              value={quantityUnit}
+              onChange={(event) => setQuantityUnit(event.target.value)}
+            >
+              <option value="kg">Kg</option>
+              <option value="pieces">Pieces</option>
+            </select>
+          </div>
+
+          <div className="form_element">
             <label htmlFor="foodTag">Food type or tag</label>
             <select
               id="foodTag"
@@ -106,6 +140,26 @@ function FoodDonation() {
             />
           </div>
           <div className="form_element">
+            <label htmlFor="expiryHours">How many hours this food will stay</label>
+            <input
+              type="number"
+              id="expiryHours"
+              name="expiryHours"
+              value={expiryHours}
+              onChange={(event) => setExpiryHours(event.target.value)}
+            />
+          </div>
+          <div className="form_element">
+            <label htmlFor="madeDate">Date when it is made</label>
+            <input
+              type="date"
+              id="madeDate"
+              name="madeDate"
+              value={madeDate}
+              onChange={(event) => setMadeDate(event.target.value)}
+            />
+          </div>
+          <div className="form_element">
             <label htmlFor="address">Address</label>
             <input
               type="address"
@@ -118,6 +172,16 @@ function FoodDonation() {
           <button id="foodDonation_submit-btn" type="submit">
             Submit
           </button>
+          {statusMessage && (
+            <p
+              style={{
+                marginTop: "1rem",
+                color: statusError ? "red" : "green",
+              }}
+            >
+              {statusMessage}
+            </p>
+          )}
         </form>
       </div>
     </div>

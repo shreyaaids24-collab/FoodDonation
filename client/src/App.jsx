@@ -19,6 +19,7 @@ import Navbar from "./components/Navbar/Navbar";
 
 import Profile from "./dashboard/Profile";
 import Food from "./dashboard/Food";
+import BookFood from "./dashboard/BookFood";
 
 function App() {
   const token = localStorage.getItem("token");
@@ -47,6 +48,7 @@ function App() {
             <Route path="/dashboard" element={<FoodDonation />} />
             <Route path="/dashboard/profile" element={<Profile />} />
             <Route path="/dashboard/food" element={<Food />} />
+            <Route path="/dashboard/book/:foodId" element={<BookFood />} />
           </Route>
         ) : (
           <Route path="*" element={<Login />} />

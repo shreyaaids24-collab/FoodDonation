@@ -9,7 +9,17 @@ const router = Router();
 // Route to handle food donation form submission
 router.post("/fooddonation", verifyToken, async (req, res) => {
     try {
-        const { foodName, foodTag, quantity, expiryDate, address, email } = req.body.formData;
+        const {
+            foodName,
+            foodTag,
+            quantity,
+            expiryDate,
+            expiryHours,
+            madeDate,
+            quantityUnit,
+            address,
+            email,
+        } = req.body.formData;
 
         const user = await User.findOne({ email });
 
@@ -19,6 +29,9 @@ router.post("/fooddonation", verifyToken, async (req, res) => {
             foodName,
             quantity,
             expiryDate,
+            expiryHours,
+            madeDate,
+            quantityUnit,
             address,
             foodTag,
             user: user._id,

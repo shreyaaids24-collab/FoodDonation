@@ -2,9 +2,9 @@ import React from "react";
 import { FaCalendarAlt, FaCartArrowDown, FaHome } from "react-icons/fa";
 import "./FoodCard.css";
 
-const FoodCard = ({ name, quantity, date, address, tag }) => {
+const FoodCard = ({ name, quantity, quantityUnit, date, madeDate, expiryHours, address, tag, onBook }) => {
   return (
-    <div>
+    <div style={{ padding: "0.5rem" }}>
       <div class="card">
         <p
           style={{
@@ -34,14 +34,30 @@ const FoodCard = ({ name, quantity, date, address, tag }) => {
                 <span className="icons-name">
                   <FaCartArrowDown />
                 </span>
-                : {quantity} kg
+                : {quantity} {quantityUnit || "kg"}
               </li>
               <li>
                 <span className="icons-name">
                   <FaCalendarAlt />
                 </span>
-                : {date}
+                : Expiry date: {date}
               </li>
+              {madeDate && (
+                <li>
+                  <span className="icons-name">
+                    <FaCalendarAlt />
+                  </span>
+                  : Made on: {madeDate}
+                </li>
+              )}
+              {expiryHours && (
+                <li>
+                  <span className="icons-name">
+                    <FaCalendarAlt />
+                  </span>
+                  : Stays good for: {expiryHours} hours
+                </li>
+              )}
               <li>
                 <span className="icons-name">
                   <FaHome />
@@ -50,7 +66,15 @@ const FoodCard = ({ name, quantity, date, address, tag }) => {
               </li>
             </ul>
           </div>
-          <button className="food-btn">Check Status</button>
+          {onBook && (
+            <button
+              className="food-btn"
+              style={{ marginTop: "0.5rem" }}
+              onClick={onBook}
+            >
+              Book Food
+            </button>
+          )}
         </div>
       </div>
     </div>

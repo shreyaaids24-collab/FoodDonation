@@ -14,4 +14,31 @@ router.get("/allfoods", verifyToken, async (req, res) => {
     }
 });
 
+// Book a specific food item (receiver books the food)
+router.patch("/food/:id/book", verifyToken, async (req, res) => {
+    try {
+        const { address } = req.body;
+        const { id } = req.params;
+
+        const food = await Food.findByIdAndUpdate(
+            id,
+            {
+                status: "ordered",
+                orderedAt: new Date(),
+                receiverAddress: address,
+            },
+            { new: true }
+        );
+
+        if (!food) {
+            return res.status(404).json({ message: "Food not found" });
+        }
+
+        res.status(200).json(food);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
+    }
+});
+
 export default router;
