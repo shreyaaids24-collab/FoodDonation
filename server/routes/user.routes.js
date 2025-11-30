@@ -1,16 +1,17 @@
 import { Router } from 'express';
 
 import User from '../models/user.js';
+import { verifyToken } from "../controllers/auth.js";
 
 const router = Router();
 
-router.get('/:userId', (req, res) => {
+router.get('/:userId', verifyToken, (req, res) => {
     User.findById(req.params.userId)
         .then((user) => res.json(user))
         .catch((err) => res.status(400).json('Error: ' + err));
 });
 
-router.put("/update", async (req, res) => {
+router.put("/update", verifyToken, async (req, res) => {
     const { id, name, number, email } = req.body;
 
     try {

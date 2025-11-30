@@ -2,11 +2,12 @@ import { Router } from "express";
 
 import Food from "../models/food.js";
 import User from "../models/user.js";
+import { verifyToken } from "../controllers/auth.js";
 
 const router = Router();
 
 // Route to handle food donation form submission
-router.post("/fooddonation", async (req, res) => {
+router.post("/fooddonation", verifyToken, async (req, res) => {
     try {
         const { foodName, foodTag, quantity, expiryDate, address, email } = req.body.formData;
 

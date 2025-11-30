@@ -25,9 +25,18 @@ function FoodDonation() {
     console.log(formData);
     // Send the form data to the server using fetch or Axios
     try {
-      const response = await axios.post("http://localhost:3000/fooddonation", {
-        formData,
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.post(
+        "http://localhost:3000/fooddonation",
+        {
+          formData,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       console.log(response.data);
       return response.data;

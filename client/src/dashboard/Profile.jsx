@@ -19,6 +19,8 @@ const Profile = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
     navigate("/login");
   };
 
@@ -35,12 +37,21 @@ const Profile = () => {
 
   const handleSaveChanges = async () => {
     try {
-      const response = await axios.put("http://localhost:3000/update", {
-        id: user._id,
-        name,
-        number,
-        email,
-      });
+      const token = localStorage.getItem("token");
+      const response = await axios.put(
+        "http://localhost:3000/update",
+        {
+          id: user._id,
+          name,
+          number,
+          email,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log(response.data);
       // Update the user object in localStorage if needed
       localStorage.setItem("user", JSON.stringify(response.data));

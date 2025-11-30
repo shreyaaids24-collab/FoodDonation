@@ -1,19 +1,42 @@
 import React from "react";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import "./Navbar.scss";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ token }) => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [showMenu, setShowMenu] = useState(false);
+
   const handleClick = () => {
     setShowMenu(!showMenu);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+    navigate("/");
+  };
+
+  const handleDonateFood = () => {
+    if (token) {
+      alert("1+token"+token);
+      navigate("/dashboard/food");
+    } else {
+      alert("2+token"+token);
+      navigate("/");
+    }
+  };
   return (
     <nav className="main">
-      <div className="logo">
+      <div
+        className="logo"
+        onClick={handleDonateFood}
+        style={{ cursor: "pointer" }}
+      >
         <h2  style={{
                 fontSize: "1.5rem",
               }}>
@@ -25,56 +48,65 @@ const Navbar = ({ token }) => {
       </div>
       <div className={showMenu ? "nav-items mobile-menu-link" : "nav-items"}>
         <ul>
-          <li>
-            <a
+          {/* <li>
+            <button
               style={{
                 fontSize: "1.0rem",
+                background: "transparent",
+                border: "none",
+                cursor: "pointer",
+                color: "inherit",
               }}
-              href="#"
+              onClick={handleDonateFood}
             >
-              Home
-            </a>
-          </li>
+              Donate 
+            </button>
+          </li> */}
           <li>
-            <a
+            <Link
+              className="link"
+              to="/about"
               style={{
                 fontSize: "1.0rem",
               }}
-              href="#"
             >
               About Us
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
+              className="link"
+              to="/our-work"
               style={{
                 fontSize: "1.0rem",
               }}
-              href="#"
             >
               Our Work
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
+              className="link"
+              to="/contact"
               style={{
                 fontSize: "1.0rem",
               }}
-              href="#"
             >
               Contact Us
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
 
       <div className="header-login">
         {
-          // if token is present then show logout button else show login and signup button
+          // if token is present then show dashboard and logout button else show login and signup button
           token ? (
-            <Link className="link" to="/dashboard">
-              <button className="btn-nav">Dashboard</button>
-            </Link>
+            <>
+              <button className="btn-nav" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
           ) : (
             <div className="l-btn">
               <Link  className="link" to="/login">

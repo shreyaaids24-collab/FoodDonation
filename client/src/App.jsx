@@ -11,6 +11,9 @@ import Home from "./pages/Home";
 import FoodDonation from "./pages/FoodDonation";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import About from "./pages/About";
+import OurWork from "./pages/OurWork";
+import Contact from "./pages/Contact";
 import Layout from "./dashboard/Layout";
 import Navbar from "./components/Navbar/Navbar";
 
@@ -27,12 +30,14 @@ function App() {
   }, [pathname]);
   return (
     <>
-      {!pathname.includes("/login") &&
-        !pathname.includes("/signup") &&
-        !pathname.includes("/dashboard") && <Navbar token={token} />}
+      <Navbar token={token} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/donation" element={<FoodDonation />} />
+
+        <Route path="/about" element={<About />} />
+        <Route path="/our-work" element={<OurWork />} />
+        <Route path="/contact" element={<Contact />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

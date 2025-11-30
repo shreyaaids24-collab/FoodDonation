@@ -28,9 +28,12 @@ const Signup = () => {
       number: formData.number,
     };
     try {
-      axios.post("http://localhost:3000/signup", data).then((response) => {
-        console.log(response);
-      });
+      const response = await axios.post("http://localhost:3000/signup", data);
+      console.log(response);
+      const { newUser, token } = response.data;
+      localStorage.setItem("user", JSON.stringify(newUser));
+      localStorage.setItem("token", token);
+      localStorage.setItem("email", formData.email);
 
       navigate("/"); // redirect to home page
     } catch (err) {
